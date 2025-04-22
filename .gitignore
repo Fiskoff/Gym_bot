@@ -1,8 +1,13 @@
-# Python
-venv/
-
 # PyCharm
 .idea/
 *.iml
 *.ipr
 *.iws
+
+
+# Python
+venv/
+.env
+alembic.ini
+gym.db
+
