@@ -6,7 +6,7 @@ from dotenv import load_dotenv
 class HelperENV:
     load_dotenv()
 
-    TOKEN = getenv("TG_TOKEN")
+    TOKEN = getenv("BOT_TOKEN")
     DB_URL = getenv("DB_URL")
 
 
