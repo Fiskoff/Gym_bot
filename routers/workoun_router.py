@@ -2,7 +2,7 @@ from aiogram import Router, F
 from aiogram.types import Message, CallbackQuery
 
 from routers.keyboard import workout_button, workouts_buttons
-from routers.workout_fsw_router import workout_fsm_router
+from routers.workout_fsm_router import workout_fsm_router
 
 
 workout_router = Router()

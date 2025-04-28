@@ -1,6 +1,6 @@
 from aiogram.types import ReplyKeyboardMarkup, KeyboardButton, InlineKeyboardMarkup, InlineKeyboardButton
 
-
+from services.workout_services import create_new_workout
 
 main_keyboard = ReplyKeyboardMarkup(
     keyboard=[[KeyboardButton(text="Тренировка"), KeyboardButton(text="Прогресс")],],
@@ -24,5 +24,12 @@ inline_keyboard=[
         [InlineKeyboardButton(text="28.01.25", callback_data="28.01.25")],
         [InlineKeyboardButton(text="30.01.25", callback_data="30.01.25")],
         [InlineKeyboardButton(text="1.02.26", callback_data="1.02.26")],
+    ]
+)
+
+create_exercise_button = InlineKeyboardMarkup(
+    inline_keyboard=[
+        [InlineKeyboardButton(text="Да", callback_data="yes_create_exercise"),
+        InlineKeyboardButton(text="Нет", callback_data="no_create_exercise")],
     ]
 )

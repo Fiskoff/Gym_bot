@@ -4,6 +4,7 @@ from aiogram.fsm.context import FSMContext
 from aiogram.types import CallbackQuery, Message
 
 from services.workout_services import create_new_workout
+from routers.keyboard import create_exercise_button
 
 
 class WorkoutFSM(StatesGroup):
@@ -32,7 +33,7 @@ async def process_workout_name(message: Message, state: FSMContext):
 @workout_fsm_router.message(WorkoutFSM.workout_date)
 async def process_workout_date(message: Message, state: FSMContext):
     await state.update_data(workout_date=message.text)
-    date = await state.get_data()
-    await create_new_workout(message.from_user.id, date["workout_date"], date["name_workout"])
-    await message.answer("Тренировка создана")
+    data = await state.get_data()
+    await create_new_workout(message.from_user.id, data["workout_date"], data["name_workout"])
+    await message.answer("Тренировка создана\nДобавим в неё упражнений?", reply_markup=create_exercise_button)
     await state.clear()
