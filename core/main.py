@@ -6,7 +6,6 @@ from aiogram import Bot, Dispatcher
 from core.env_helper import env_helper
 from routers.main_router import main_router
 
-
 bot = Bot(env_helper.TOKEN)
 dp = Dispatcher()
 

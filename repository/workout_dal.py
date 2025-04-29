@@ -1,4 +1,4 @@
-from sqlalchemy import select
+from sqlalchemy import select, and_
 from sqlalchemy.ext.asyncio import AsyncSession
 
 from models.workout_model import WorkoutsM
@@ -22,3 +22,20 @@ class WorkoutDAL:
         result = await self.session.execute(stmt)
         last_workout_id = result.scalar()
         return last_workout_id
+
+    async def get_workouts(self, user_id: int) -> list[dict]:
+        stmt = select(WorkoutsM).where(WorkoutsM.user_id == user_id)
+        result = await self.session.execute(stmt)
+        workouts = result.scalars().all()
+        all_workouts = [workout.__dict__ for workout in workouts]
+        return all_workouts
+
+    async def get_id_workout(self, workout_name: str, workout_date: str) -> int:
+        stmt = (
+            select(WorkoutsM.workout_id)
+            .where(and_(WorkoutsM.name_workout == workout_name, WorkoutsM.workout_date == workout_date))
+            .limit(1)
+        )
+        result = await self.session.execute(stmt)
+        workout_id = result.scalars().all()
+        return workout_id[0]

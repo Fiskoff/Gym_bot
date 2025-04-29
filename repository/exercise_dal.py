@@ -1,3 +1,4 @@
+from sqlalchemy import select
 from sqlalchemy.ext.asyncio import AsyncSession
 
 from models.exercise_model import ExerciseM
@@ -16,4 +17,11 @@ class ExerciseDAL:
             weight=weight
         ))
         await self.session.commit()
+
+    async def get_exercise_for_workout(self, workout_id: int) -> dict:
+        stmt = select(ExerciseM).where(ExerciseM.workout_id == workout_id)
+        result = await self.session.execute(stmt)
+        exercise_all = result.scalars().all()
+        exercise_all_dict = [exercise.__dict__ for exercise in exercise_all]
+        return exercise_all_dict
 

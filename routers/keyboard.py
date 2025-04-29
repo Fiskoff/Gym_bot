@@ -1,6 +1,7 @@
 from aiogram.types import ReplyKeyboardMarkup, KeyboardButton, InlineKeyboardMarkup, InlineKeyboardButton
+from aiogram.utils.keyboard import InlineKeyboardBuilder
 
-from services.workout_services import create_new_workout
+from services.workout_services import get_all_workouts
 
 main_keyboard = ReplyKeyboardMarkup(
     keyboard=[[KeyboardButton(text="Тренировка"), KeyboardButton(text="Прогресс")],],
@@ -18,14 +19,14 @@ workout_button = InlineKeyboardMarkup(
     ]
 )
 
-workouts_buttons = InlineKeyboardMarkup(
-inline_keyboard=[
-        [InlineKeyboardButton(text="25.01.25", callback_data="25.01.25")],
-        [InlineKeyboardButton(text="28.01.25", callback_data="28.01.25")],
-        [InlineKeyboardButton(text="30.01.25", callback_data="30.01.25")],
-        [InlineKeyboardButton(text="1.02.26", callback_data="1.02.26")],
-    ]
-)
+
+async def inline_workouts(user_id: int):
+    workouts = await get_all_workouts(user_id)
+    new_workouts_buttons = InlineKeyboardBuilder()
+    for workout in workouts:
+        new_workouts_buttons.add(InlineKeyboardButton(text=workout, callback_data=workout))
+    return new_workouts_buttons.adjust(2).as_markup()
+
 
 create_exercise_button = InlineKeyboardMarkup(
     inline_keyboard=[
